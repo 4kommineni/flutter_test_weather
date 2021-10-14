@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Alekhya Text one',
             ),
+            Text('poojitha'),
           ],
         ),
       ),
