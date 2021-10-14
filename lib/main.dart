@@ -38,6 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Weather App',
             ),
+            Text(
+              'Harsha Text',
+            ),
           ],
         ),
       ),
