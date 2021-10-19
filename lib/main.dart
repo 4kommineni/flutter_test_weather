@@ -37,7 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const Text('Weather App'),
+            const Text(
+              'WEATHER APP',
+              style: TextStyle(fontSize: 30.0, color: Colors.pink),
+            ),
             TextButton(
               onPressed: () {},
               child: const Text(
