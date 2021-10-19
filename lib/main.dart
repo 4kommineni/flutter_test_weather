@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {},
               child: const Text(
                 'START',
-                style: TextStyle(fontSize: 20.0, color: Colors.blueGrey),
+                style: TextStyle(fontSize: 20.0, color: Colors.green),
               ),
             ),
           ],
