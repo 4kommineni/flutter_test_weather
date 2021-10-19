@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:weather/details_page.dart';
+import 'package:flutter_test_weather/details_page.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -57,4 +57,3 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 }
-';
