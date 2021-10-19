@@ -31,27 +31,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Weather App',
+        body: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            const Text('Weather App'),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'START',
+                style: TextStyle(fontSize: 20.0, color: Colors.blueGrey),
+              ),
             ),
-            Text(
-              'Harsha Text',
-            ),
-            Text(
-              'Alekhya Text',
-            ),
-            Text(
-              'Alekhya Text one',
-            ),
-            Text('poojitha'),
-            Text('Deepika'),
           ],
         ),
-      ),
-    );
+      ],
+    ));
   }
 }
