@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_weather/report_page.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  final ImagePicker _picker = ImagePicker();
+  Uint8List? profilePic;
+
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
 
@@ -36,6 +42,34 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (profilePic != null)
+                          ? Image.memory(
+                              profilePic!,
+                              width: 200,
+                              height: 200,
+                            )
+                          : Image.asset(
+                              "images/profile_pic.png",
+                              width: 200,
+                              height: 200,
+                            ),
+                      TextButton.icon(
+                        onPressed: () async {
+                          // provide options to choose from gallery or camera
+                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                          image?.readAsBytes().then((value) {
+                            profilePic = value;
+                            setState(() {});
+                          });
+                        },
+                        icon: const Icon(Icons.edit),
+                        label: const Text("change"),
+                      ),
+                    ],
+                  ),
                   TextFormField(
                     style: const TextStyle(fontSize: 20),
                     controller: mintemperature,
@@ -116,8 +150,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     onPressed: () {
                       Navigator.pop(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const ReportPage()),
+                        MaterialPageRoute(builder: (context) => const ReportPage()),
                       );
                     },
                     child: const Text(
