@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 class AllWeatherData {
   List<WeatherData> allData = List.empty(growable: true);
 }
 
 class WeatherData {
-  dynamic profilepic;
+  Uint8List profilepic;
 
   int mintemp;
   int maxtemp;
