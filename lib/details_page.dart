@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_weather/report_page.dart';
+import 'package:flutter_test_weather/wether_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({Key? key}) : super(key: key);
+  final WeatherData? weatherData;
+  const DetailsPage({Key? key, this.weatherData}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DetailsPageState();
 }
@@ -21,6 +23,14 @@ class _DetailsPageState extends State<DetailsPage> {
 
   int weathercondition = 0;
   @override
+  void initState() {
+    mintemperature.text = widget.weatherData?.mintemp.toString() ?? "0";
+    maxtemperature.text = widget.weatherData?.maxtemp.toString() ?? "0";
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,14 +38,14 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.purple,
       ),
       body: Center(
-        child: Container(
-          width: 600.0,
-          height: 800.0,
-          child: Card(
-            elevation: 50.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
+        child: Card(
+          elevation: 50.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Container(
+            width: 600.0,
+            height: 800.0,
             color: Colors.amber[50],
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -59,7 +69,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       TextButton.icon(
                         onPressed: () async {
                           // provide options to choose from gallery or camera
-                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                          final XFile? image = await _picker.pickImage(
+                              source: ImageSource.gallery);
                           image?.readAsBytes().then((value) {
                             profilePic = value;
                             setState(() {});
@@ -83,8 +94,8 @@ class _DetailsPageState extends State<DetailsPage> {
                   TextFormField(
                     style: const TextStyle(fontSize: 20),
                     controller: maxtemperature,
-                    keyboardType: TextInputType.number,
                     maxLength: 2,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Enter Maximum Temperature',
                       border: OutlineInputBorder(),
@@ -135,23 +146,25 @@ class _DetailsPageState extends State<DetailsPage> {
                   ]),
                   Row(
                     children: [
-                      const Text(
-                        "Select Date:",
-                        style: TextStyle(fontSize: 20),
-                      ),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2021, 09, 30),
+                            firstDate: DateTime(1950, 1),
+                            lastDate: DateTime(2022, 1),
+                            helpText: 'Select a date',
+                          );
+                          setState(() {});
+                        },
                         icon: const Icon(Icons.calendar_today_rounded),
-                        label: const Text(""),
+                        label: const Text("Select date"),
                       ),
                     ],
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ReportPage()),
-                      );
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       "Add",
