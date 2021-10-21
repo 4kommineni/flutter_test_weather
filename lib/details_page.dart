@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,20 +15,14 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
-  Uint8List? profilePic;
+  Uint8List? data = null;
+  DateTime? dob = DateTime.now();
 
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
+  TextEditingController dateofBirth = TextEditingController();
 
   int weathercondition = 0;
-  @override
-  void initState() {
-    mintemperature.text = widget.weatherData?.mintemp.toString() ?? "0";
-    maxtemperature.text = widget.weatherData?.maxtemp.toString() ?? "0";
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +31,14 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.purple,
       ),
       body: Center(
-        child: Card(
-          elevation: 50.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Container(
-            width: 600.0,
-            height: 800.0,
+        child: Container(
+          width: 600.0,
+          height: 800.0,
+          child: Card(
+            elevation: 50.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
             color: Colors.amber[50],
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -55,9 +48,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      (profilePic != null)
+                      (data != null)
                           ? Image.memory(
-                              profilePic!,
+                              data!,
                               width: 200,
                               height: 200,
                             )
@@ -72,7 +65,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           final XFile? image = await _picker.pickImage(
                               source: ImageSource.gallery);
                           image?.readAsBytes().then((value) {
-                            profilePic = value;
+                            data = value;
                             setState(() {});
                           });
                         },
@@ -94,8 +87,8 @@ class _DetailsPageState extends State<DetailsPage> {
                   TextFormField(
                     style: const TextStyle(fontSize: 20),
                     controller: maxtemperature,
-                    maxLength: 2,
                     keyboardType: TextInputType.number,
+                    maxLength: 2,
                     decoration: const InputDecoration(
                       labelText: 'Enter Maximum Temperature',
                       border: OutlineInputBorder(),
@@ -144,27 +137,36 @@ class _DetailsPageState extends State<DetailsPage> {
                       style: TextStyle(fontSize: 15),
                     ),
                   ]),
-                  Row(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2021, 09, 30),
-                            firstDate: DateTime(1950, 1),
-                            lastDate: DateTime(2022, 1),
-                            helpText: 'Select a date',
-                          );
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.calendar_today_rounded),
-                        label: const Text("Select date"),
-                      ),
-                    ],
+                  TextField(
+                    readOnly: true,
+                    controller: dateofBirth,
+                    decoration: InputDecoration(hintText: 'Pick your Date'),
+                    // Text(widget.userData?.dateOfBirth.toString() ?? ""),
+                    // ElevatedButton(
+                    onTap: () async {
+                      var date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime(2021, 09, 30),
+                        firstDate: DateTime(1950, 1),
+                        lastDate: DateTime(2022, 1),
+                        helpText: 'Select a date',
+                      );
+                      dateofBirth.text = date?.toUtc().toString() ?? " ";
+                      dob = date;
+                      setState(() {});
+                    },
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      WeatherData inputData = WeatherData(
+                          mintemp: int.parse(mintemperature.text.toString()),
+                          maxtemp: int.parse(maxtemperature.text.toString()),
+                          date: dob,
+                          weathercondition:
+                              (weathercondition == 0) ? "sunny" : "rainy",
+                          profilepic: data!);
+
+                      Navigator.pop(context, inputData);
                     },
                     child: const Text(
                       "Add",

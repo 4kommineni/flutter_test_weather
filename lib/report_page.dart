@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_weather/details_page.dart';
+import 'package:flutter_test_weather/wether_model.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -10,7 +11,17 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  AllWeatherData? weatherdetails;
   @override
+  @override
+  void initState() {
+    weatherdetails = AllWeatherData();
+
+    weatherdetails?.allData.add;
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,37 +34,88 @@ class _ReportPageState extends State<ReportPage> {
             style: TextStyle(fontSize: 30.0, color: Colors.white)),
         backgroundColor: Colors.black,
       ),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'NO DATA AVALIABLE',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.redAccent,
-              ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              weatherdetails?.allData.length ?? 0,
+              (index) => weatherdetailsAsCard(index),
             ),
-            //   if (checked)
-            // Text(
-            //    'Second Widget',
-            //  style: TextStyle(
-            //    fontSize: 18,
-            //    fontWeight: FontWeight.bold,
-            //  ),
-            // )
-          ]),
+          ),
+        ]),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          WeatherData newData = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const DetailsPage()),
           );
+          weatherdetails?.allData.add(newData);
+          setState(() {});
         },
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget weatherdetailsAsCard(index) {
+    return Card(
+        clipBehavior: Clip.antiAlias,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.memory(
+              weatherdetails!.allData.elementAt(index).profilepic,
+              fit: BoxFit.cover,
+              width: 80,
+              height: 80,
+            ),
+          ),
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Text(weatherdetails?.allData
+                    .elementAt(index)
+                    .date!
+                    .toUtc()
+                    .toString() ??
+                ""),
+            Padding(padding: const EdgeInsets.only(top: 23)),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(text: 'maxtemp :', children: <TextSpan>[
+                      TextSpan(
+                        text: (weatherdetails?.allData
+                                .elementAt(index)
+                                .maxtemp
+                                .toString() ??
+                            ""),
+                      )
+                    ]),
+                  ),
+                  RichText(
+                    text: TextSpan(text: 'mintemp :', children: <TextSpan>[
+                      TextSpan(
+                        text: (weatherdetails?.allData
+                                .elementAt(index)
+                                .mintemp
+                                .toString() ??
+                            ""),
+                      )
+                    ]),
+                  ),
+                ]),
+            Padding(padding: const EdgeInsets.only(top: 23)),
+            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(weatherdetails?.allData.elementAt(index).weathercondition ??
+                  ""),
+            ]),
+          ])
+        ]));
   }
 }
