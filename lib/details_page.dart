@@ -142,8 +142,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     controller: datetime,
                     decoration:
                         const InputDecoration(hintText: 'Pick your Date'),
-                    // Text(widget.userData?.dateOfBirth.toString() ?? ""),
-                    // ElevatedButton(
                     onTap: () async {
                       var date = await showDatePicker(
                         context: context,
