@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_test_weather/report_page.dart';
+//import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,12 +15,12 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
-  Uint8List? data = null;
-  DateTime? dob = DateTime.now();
+  Uint8List? data;
+  DateTime? date = DateTime.now();
 
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
-  TextEditingController dateofBirth = TextEditingController();
+  TextEditingController datetime = TextEditingController();
 
   int weathercondition = 0;
   @override
@@ -31,14 +31,14 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.purple,
       ),
       body: Center(
-        child: Container(
-          width: 600.0,
-          height: 800.0,
-          child: Card(
-            elevation: 50.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
+        child: Card(
+          elevation: 50.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Container(
+            width: 600.0,
+            height: 800.0,
             color: Colors.amber[50],
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -96,7 +96,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Row(children: [
                     const Text(
-                      "Weather Condition",
+                      "WEATHER CONDITION",
                       style: TextStyle(fontSize: 20),
                     ),
                     Radio(
@@ -108,8 +108,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       },
                     ),
                     const Text(
-                      'Sunny',
-                      style: TextStyle(fontSize: 15),
+                      'SUNNY',
+                      style: TextStyle(fontSize: 20),
                     ),
                     const VerticalDivider(thickness: 1),
                     Radio(
@@ -121,8 +121,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       },
                     ),
                     const Text(
-                      'Rainy',
-                      style: TextStyle(fontSize: 15),
+                      'RAINY',
+                      style: TextStyle(fontSize: 20),
                     ),
                     Radio(
                       value: 2,
@@ -133,16 +133,15 @@ class _DetailsPageState extends State<DetailsPage> {
                       },
                     ),
                     const Text(
-                      'Cloudy',
-                      style: TextStyle(fontSize: 15),
+                      'CLOUDY',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ]),
                   TextField(
                     readOnly: true,
-                    controller: dateofBirth,
-                    decoration: InputDecoration(hintText: 'Pick your Date'),
-                    // Text(widget.userData?.dateOfBirth.toString() ?? ""),
-                    // ElevatedButton(
+                    controller: datetime,
+                    decoration:
+                        const InputDecoration(hintText: 'Pick your Date'),
                     onTap: () async {
                       var date = await showDatePicker(
                         context: context,
@@ -151,8 +150,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
-                      dateofBirth.text = date?.toUtc().toString() ?? " ";
-                      dob = date;
+                      datetime.text = date?.toUtc().toString() ?? " ";
+                      date = date;
                       setState(() {});
                     },
                   ),
@@ -161,16 +160,16 @@ class _DetailsPageState extends State<DetailsPage> {
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: dob,
+                          date: date,
                           weathercondition:
-                              (weathercondition == 0) ? "sunny" : "rainy",
+                              (weathercondition == 0) ? "SUNNY" : "RAINY",
                           profilepic: data!);
 
                       Navigator.pop(context, inputData);
                     },
                     child: const Text(
-                      "Add",
-                      style: TextStyle(fontSize: 20),
+                      "ADD",
+                      style: TextStyle(fontSize: 30),
                     ),
                   ),
                 ],

@@ -22,6 +22,7 @@ class _ReportPageState extends State<ReportPage> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,21 +31,19 @@ class _ReportPageState extends State<ReportPage> {
               Navigator.pop(context);
             },
             child: const Icon(Icons.backspace)),
-        title: const Text('WETHER REPORT',
+        title: const Text('WEATHER REPORT',
             style: TextStyle(fontSize: 30.0, color: Colors.white)),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              weatherdetails?.allData.length ?? 0,
-              (index) => weatherdetailsAsCard(index),
-            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            weatherdetails?.allData.length ?? 0,
+            (index) => weatherdetailsAsCard(index),
           ),
-        ]),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),
@@ -64,6 +63,9 @@ class _ReportPageState extends State<ReportPage> {
 
   Widget weatherdetailsAsCard(index) {
     return Card(
+        elevation: 8,
+        color: Colors.blueGrey,
+        margin: const EdgeInsets.all(100),
         clipBehavior: Clip.antiAlias,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
@@ -76,16 +78,16 @@ class _ReportPageState extends State<ReportPage> {
               height: 80,
             ),
           ),
-          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(weatherdetails?.allData
                     .elementAt(index)
                     .date!
                     .toUtc()
                     .toString() ??
                 ""),
-            Padding(padding: const EdgeInsets.only(top: 23)),
+            const Padding(padding: EdgeInsets.only(top: 23)),
             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   RichText(
                     text: TextSpan(text: 'maxtemp :', children: <TextSpan>[
@@ -110,8 +112,8 @@ class _ReportPageState extends State<ReportPage> {
                     ]),
                   ),
                 ]),
-            Padding(padding: const EdgeInsets.only(top: 23)),
-            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const Padding(padding: EdgeInsets.only(top: 23)),
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(weatherdetails?.allData.elementAt(index).weathercondition ??
                   ""),
             ]),
