@@ -65,7 +65,6 @@ class _ReportPageState extends State<ReportPage> {
     return Card(
         elevation: 8,
         color: Colors.blueGrey,
-        margin: const EdgeInsets.all(100),
         clipBehavior: Clip.antiAlias,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
