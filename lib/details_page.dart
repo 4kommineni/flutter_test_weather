@@ -66,6 +66,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               source: ImageSource.gallery);
                           image?.readAsBytes().then((value) {
                             data = value;
+
                             setState(() {});
                           });
                         },
@@ -140,7 +141,8 @@ class _DetailsPageState extends State<DetailsPage> {
                   TextField(
                     readOnly: true,
                     controller: dateofBirth,
-                    decoration: InputDecoration(hintText: 'Pick your Date'),
+                    decoration:
+                        const InputDecoration(hintText: 'Pick your Date'),
                     // Text(widget.userData?.dateOfBirth.toString() ?? ""),
                     // ElevatedButton(
                     onTap: () async {
@@ -151,6 +153,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
+
                       dateofBirth.text = date?.toUtc().toString() ?? " ";
                       dob = date;
                       setState(() {});
@@ -158,12 +161,20 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      String weathercond = "";
+                      if (weathercondition == 0) {
+                        weathercond = "sunny";
+                      } else if (weathercondition == 1) {
+                        weathercond = "Rainy";
+                      } else {
+                        weathercond = "Cloudy";
+                      }
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
                           date: dob,
-                          weathercondition:
-                              (weathercondition == 0) ? "sunny" : "rainy",
+                          weathercondition: weathercond,
+                          // (weathercondition == 0) ? "sunny" : "rainy",
                           profilepic: data!);
 
                       Navigator.pop(context, inputData);
