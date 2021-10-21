@@ -6,7 +6,6 @@ class AllWeatherData {
 
 class WeatherData {
   Uint8List profilepic;
-
   int mintemp;
   int maxtemp;
   String weathercondition;
