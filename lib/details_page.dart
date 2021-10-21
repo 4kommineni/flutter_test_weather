@@ -31,21 +31,22 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.purple,
       ),
       body: Center(
-        child: Card(
-          elevation: 50.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Container(
-            width: 600.0,
-            height: 800.0,
-            color: Colors.amber[50],
+        child: SizedBox(
+          width: 600.0,
+          height: 1200.0,
+          child: Card(
+            elevation: 30.0,
+            color: Colors.indigoAccent[50],
+            margin: const EdgeInsets.all(20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       (data != null)
@@ -75,66 +76,76 @@ class _DetailsPageState extends State<DetailsPage> {
                     ],
                   ),
                   TextFormField(
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 15),
                     controller: mintemperature,
                     keyboardType: TextInputType.number,
                     maxLength: 2,
                     decoration: const InputDecoration(
                       labelText: 'Enter Minimum Temperature',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderSide: BorderSide(width: 2.0),
+                      ),
                     ),
                   ),
                   TextFormField(
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 15),
                     controller: maxtemperature,
                     keyboardType: TextInputType.number,
                     maxLength: 2,
                     decoration: const InputDecoration(
                       labelText: 'Enter Maximum Temperature',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderSide: BorderSide(width: 2.0),
+                      ),
                     ),
                   ),
-                  Row(children: [
+                  Column(children: [
                     const Text(
-                      "WEATHER CONDITION",
-                      style: TextStyle(fontSize: 20),
+                      "CHOOSE WEATHER TYPE",
+                      style: TextStyle(fontSize: 15),
                     ),
-                    Radio(
-                      value: 0,
-                      groupValue: weathercondition,
-                      onChanged: (value) {
-                        weathercondition = 0;
-                        setState(() {});
-                      },
-                    ),
-                    const Text(
-                      'SUNNY',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const VerticalDivider(thickness: 1),
-                    Radio(
-                      value: 1,
-                      groupValue: weathercondition,
-                      onChanged: (value) {
-                        weathercondition = 1;
-                        setState(() {});
-                      },
-                    ),
-                    const Text(
-                      'RAINY',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Radio(
-                      value: 2,
-                      groupValue: weathercondition,
-                      onChanged: (value) {
-                        weathercondition = 2;
-                        setState(() {});
-                      },
-                    ),
-                    const Text(
-                      'CLOUDY',
-                      style: TextStyle(fontSize: 20),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 0,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 0;
+                            setState(() {});
+                          },
+                        ),
+                        const Text(
+                          'SUNNY',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        const VerticalDivider(thickness: 1),
+                        Radio(
+                          value: 1,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 1;
+                            setState(() {});
+                          },
+                        ),
+                        const Text(
+                          'RAINY',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Radio(
+                          value: 2,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 2;
+                            setState(() {});
+                          },
+                        ),
+                        const Text(
+                          'CLOUDY',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
                     ),
                   ]),
                   TextField(
@@ -150,7 +161,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
-                      datetime.text = date?.toUtc().toString() ?? " ";
+                      datetime.text = date?.toUtc().toString() ?? "";
                       date = date;
                       setState(() {});
                     },
