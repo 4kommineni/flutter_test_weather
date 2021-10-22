@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 //import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
@@ -38,14 +39,14 @@ class _DetailsPageState extends State<DetailsPage> {
           child: Card(
             elevation: 30.0,
             color: Colors.indigoAccent[50],
-            margin: const EdgeInsets.all(20),
+            margin: const EdgeInsets.all(5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,6 +81,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     style: const TextStyle(fontSize: 15),
                     controller: mintemperature,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
                     decoration: InputDecoration(
                       errorText: errormessage,
@@ -94,6 +96,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     style: const TextStyle(fontSize: 15),
                     controller: maxtemperature,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
                     decoration: InputDecoration(
                       labelText: 'Enter Maximum Temperature',
@@ -154,8 +157,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   TextField(
                     readOnly: true,
                     controller: datetime,
-                    decoration:
-                        const InputDecoration(hintText: 'Pick your Date'),
+                    decoration: const InputDecoration(
+                      hintText: 'Pick your Date',
+                      icon: Icon(Icons.calendar_today),
+                    ),
                     onTap: () async {
                       var date = await showDatePicker(
                         context: context,
@@ -164,7 +169,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
-                      datetime.text = date?.toIso8601String().toString() ?? "";
+                      datetime.text = date?.toUtc().toString() ?? "";
+
                       date = date;
                       setState(() {});
                     },
