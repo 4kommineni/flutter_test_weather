@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 //import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
@@ -79,6 +80,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     style: const TextStyle(fontSize: 15),
                     controller: mintemperature,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
                     decoration: const InputDecoration(
                       labelText: 'Enter Minimum Temperature',
@@ -92,6 +94,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     style: const TextStyle(fontSize: 15),
                     controller: maxtemperature,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
                     decoration: const InputDecoration(
                       labelText: 'Enter Maximum Temperature',
@@ -164,6 +167,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         helpText: 'Select a date',
                       );
                       datetime.text = date?.toUtc().toString() ?? "";
+
                       date = date;
                       setState(() {});
                     },
