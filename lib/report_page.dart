@@ -66,54 +66,134 @@ class _ReportPageState extends State<ReportPage> {
     return Card(
         clipBehavior: Clip.antiAlias,
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.memory(
               weatherdetails!.allData.elementAt(index).profilepic,
               fit: BoxFit.cover,
-              width: 80,
-              height: 80,
+              width: 200,
+              height: 200,
             ),
           ),
-          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Text(weatherdetails?.allData
-                    .elementAt(index)
-                    .date!
-                    .toUtc()
-                    .toString() ??
-                ""),
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Text(
+              "Today date is:",
+              style: TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              weatherdetails?.allData
+                      .elementAt(index)
+                      .date!
+                      .toUtc()
+                      .toString() ??
+                  "",
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold),
+            ),
             Padding(padding: const EdgeInsets.only(top: 23)),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Maximum Temperature:",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold)),
+                  Text(
+                    weatherdetails?.allData
+                            .elementAt(index)
+                            .maxtemp
+                            .toString() ??
+                        "",
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text("Minimum Temperature:",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold)),
+                  Text(
+                    weatherdetails?.allData
+                            .elementAt(index)
+                            .mintemp
+                            .toString() ??
+                        "",
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              /* children: <Widget>[
                   RichText(
-                    text: TextSpan(text: 'maxtemp :', children: <TextSpan>[
-                      TextSpan(
-                        text: (weatherdetails?.allData
-                                .elementAt(index)
-                                .maxtemp
-                                .toString() ??
-                            ""),
-                      )
-                    ]),
+                    text: TextSpan(
+                        text: 'Maximum Temperature :',
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: (weatherdetails?.allData
+                                    .elementAt(index)
+                                    .maxtemp
+                                    .toString() ??
+                                ""),
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ]),
                   ),
                   RichText(
-                    text: TextSpan(text: 'mintemp :', children: <TextSpan>[
-                      TextSpan(
-                        text: (weatherdetails?.allData
-                                .elementAt(index)
-                                .mintemp
-                                .toString() ??
-                            ""),
-                      )
-                    ]),
+                    text: TextSpan(
+                        text: 'Minimum Temperature :',
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: (weatherdetails?.allData
+                                    .elementAt(index)
+                                    .mintemp
+                                    .toString() ??
+                                ""),
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ]),
                   ),
-                ]),
+                ]*/
+            ]),
             Padding(padding: const EdgeInsets.only(top: 23)),
             Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text(weatherdetails?.allData.elementAt(index).weathercondition ??
-                  ""),
+              Text(
+                weatherdetails?.allData.elementAt(index).weathercondition ?? "",
+                style: const TextStyle(
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold),
+              ),
             ]),
           ])
         ]));
