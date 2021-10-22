@@ -69,14 +69,11 @@ class _ReportPageState extends State<ReportPage> {
         clipBehavior: Clip.antiAlias,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.memory(
-              weatherdetails!.allData.elementAt(index).profilepic,
-              fit: BoxFit.cover,
-              width: 200,
-              height: 200,
-            ),
+          Image.memory(
+            weatherdetails!.allData.elementAt(index).profilepic,
+            fit: BoxFit.cover,
+            width: 200,
+            height: 200,
           ),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(weatherdetails?.allData
@@ -136,6 +133,33 @@ class _ReportPageState extends State<ReportPage> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(weatherdetails?.allData.elementAt(index).weathercondition ??
                   ""),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      WeatherData modifiedData = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(
+                            weatherData:
+                                weatherdetails!.allData.elementAt(index),
+                          ),
+                        ),
+                      );
+                      weatherdetails!.allData[index] = modifiedData;
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.edit),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      weatherdetails?.allData.removeAt(index);
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.delete),
+                  ),
+                ],
+              ),
             ]),
           ])
         ]));

@@ -38,7 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
           child: Card(
             elevation: 30.0,
             color: Colors.indigoAccent[50],
-            margin: const EdgeInsets.all(20),
+            margin: const EdgeInsets.all(5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
