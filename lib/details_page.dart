@@ -19,7 +19,7 @@ class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? data;
   DateTime? date = DateTime.now();
-
+  String errormessage = "";
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
   TextEditingController datetime = TextEditingController();
@@ -83,7 +83,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      errorText: errormessage,
                       labelText: 'Enter Minimum Temperature',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -97,8 +98,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Enter Maximum Temperature',
+                      errorText: errormessage,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(width: 2.0),
@@ -180,12 +182,28 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      String weathercond = "";
+                      if (weathercondition == 0) {
+                        weathercond = "Sunny";
+                      } else if (weathercondition == 1) {
+                        weathercond = "Rainy";
+                      } else {
+                        weathercond = "Cloudy";
+                      }
+                      if (mintemperature.value == null) {
+                        mintemperature.text = "Please enter the value";
+                      }
+                      if (maxtemperature.value == null) {
+                        mintemperature.text = "Please enter the value";
+                      }
+                      DateTime newdate =
+                          DateFormat("dd/mm/yyyy").format(date!) as DateTime;
+
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: date,
-                          weathercondition:
-                              (weathercondition == 0) ? "SUNNY" : "RAINY",
+                          date: newdate,
+                          weathercondition: weathercond,
                           profilepic: data!);
 
                       Navigator.pop(context, inputData);
