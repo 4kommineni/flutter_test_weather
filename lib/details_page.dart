@@ -44,7 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -151,8 +151,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   TextField(
                     readOnly: true,
                     controller: datetime,
-                    decoration:
-                        const InputDecoration(hintText: 'Pick your Date'),
+                    decoration: const InputDecoration(
+                      hintText: 'Pick your Date',
+                      icon: Icon(Icons.calendar_today),
+                    ),
                     onTap: () async {
                       var date = await showDatePicker(
                         context: context,
