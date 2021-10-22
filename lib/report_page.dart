@@ -22,6 +22,7 @@ class _ReportPageState extends State<ReportPage> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,21 +31,19 @@ class _ReportPageState extends State<ReportPage> {
               Navigator.pop(context);
             },
             child: const Icon(Icons.backspace)),
-        title: const Text('WETHER REPORT',
+        title: const Text('WEATHER REPORT',
             style: TextStyle(fontSize: 30.0, color: Colors.white)),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              weatherdetails?.allData.length ?? 0,
-              (index) => weatherdetailsAsCard(index),
-            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            weatherdetails?.allData.length ?? 0,
+            (index) => weatherdetailsAsCard(index),
           ),
-        ]),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),
@@ -64,6 +63,9 @@ class _ReportPageState extends State<ReportPage> {
 
   Widget weatherdetailsAsCard(index) {
     return Card(
+        elevation: 8,
+        color: Colors.blueGrey,
+        margin: const EdgeInsets.all(20),
         clipBehavior: Clip.antiAlias,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
@@ -77,70 +79,16 @@ class _ReportPageState extends State<ReportPage> {
             ),
           ),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text(
-              "Today date is:",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              weatherdetails?.allData
-                      .elementAt(index)
-                      .date!
-                      .toUtc()
-                      .toString() ??
-                  "",
-              style: const TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold),
-            ),
-            Padding(padding: const EdgeInsets.only(top: 23)),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Maximum Temperature:",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold)),
-                  Text(
-                    weatherdetails?.allData
-                            .elementAt(index)
-                            .maxtemp
-                            .toString() ??
-                        "",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text("Minimum Temperature:",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold)),
-                  Text(
-                    weatherdetails?.allData
-                            .elementAt(index)
-                            .mintemp
-                            .toString() ??
-                        "",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              /* children: <Widget>[
+            Text(weatherdetails?.allData
+                    .elementAt(index)
+                    .date!
+                    .toUtc()
+                    .toString() ??
+                ""),
+            const Padding(padding: EdgeInsets.only(top: 23)),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
                   RichText(
                     text: TextSpan(
                         text: 'Maximum Temperature :',
@@ -183,17 +131,11 @@ class _ReportPageState extends State<ReportPage> {
                           )
                         ]),
                   ),
-                ]*/
-            ]),
-            Padding(padding: const EdgeInsets.only(top: 23)),
-            Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text(
-                weatherdetails?.allData.elementAt(index).weathercondition ?? "",
-                style: const TextStyle(
-                    fontSize: 15,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold),
-              ),
+                ]),
+            const Padding(padding: EdgeInsets.only(top: 23)),
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(weatherdetails?.allData.elementAt(index).weathercondition ??
+                  ""),
             ]),
           ])
         ]));
