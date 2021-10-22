@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 //import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class DetailsPage extends StatefulWidget {
   final WeatherData? weatherData;
@@ -17,7 +18,7 @@ class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? data;
   DateTime? date = DateTime.now();
-
+  String errormessage = "";
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
   TextEditingController datetime = TextEditingController();
@@ -80,7 +81,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     controller: mintemperature,
                     keyboardType: TextInputType.number,
                     maxLength: 2,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      errorText: errormessage,
                       labelText: 'Enter Minimum Temperature',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -93,8 +95,9 @@ class _DetailsPageState extends State<DetailsPage> {
                     controller: maxtemperature,
                     keyboardType: TextInputType.number,
                     maxLength: 2,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Enter Maximum Temperature',
+                      errorText: errormessage,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(width: 2.0),
@@ -161,19 +164,35 @@ class _DetailsPageState extends State<DetailsPage> {
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
-                      datetime.text = date?.toUtc().toString() ?? "";
+                      datetime.text = date?.toIso8601String().toString() ?? "";
                       date = date;
                       setState(() {});
                     },
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      String weathercond = "";
+                      if (weathercondition == 0) {
+                        weathercond = "Sunny";
+                      } else if (weathercondition == 1) {
+                        weathercond = "Rainy";
+                      } else {
+                        weathercond = "Cloudy";
+                      }
+                      if (mintemperature.value == null) {
+                        mintemperature.text = "Please enter the value";
+                      }
+                      if (maxtemperature.value == null) {
+                        mintemperature.text = "Please enter the value";
+                      }
+                      DateTime newdate =
+                          DateFormat("dd/mm/yyyy").format(date!) as DateTime;
+
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: date,
-                          weathercondition:
-                              (weathercondition == 0) ? "SUNNY" : "RAINY",
+                          date: newdate,
+                          weathercondition: weathercond,
                           profilepic: data!);
 
                       Navigator.pop(context, inputData);
