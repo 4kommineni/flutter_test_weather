@@ -26,6 +26,14 @@ class _DetailsPageState extends State<DetailsPage> {
 
   int weathercondition = 0;
   @override
+  void initState() {
+    //print(" rollNumber= ${widget.student?.rollNumber.toString()}");
+    mintemperature.text = widget.weatherData?.mintemp.toString() ?? "";
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -190,6 +198,12 @@ class _DetailsPageState extends State<DetailsPage> {
                       } else {
                         weathercond = "Cloudy";
                       }
+                      int min = int.parse(mintemperature.text.toString());
+                      if (min < -20 || min > 10) {
+                        final _snackBar3 = const SnackBar(
+                            content: Text('please enter correct mintemp'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar3);
+                      }
                       // if (mintemperature.value == null) {
                       //  mintemperature.text = "Please enter the value";
                       //}
@@ -200,7 +214,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       //   DateFormat("dd/mm/yyyy").format(date!) as DateTime;
 
                       WeatherData inputData = WeatherData(
-                          mintemp: int.parse(mintemperature.text.toString()),
+                          mintemp: min,
                           maxtemp: int.parse(maxtemperature.text.toString()),
                           date: date,
                           weathercondition: weathercond,
