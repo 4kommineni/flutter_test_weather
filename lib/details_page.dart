@@ -19,7 +19,8 @@ class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? data;
   DateTime? date = DateTime.now();
-  String errormessage = "";
+  String? minErrorMessage;
+  String? maxErrorMessage;
   TextEditingController mintemperature = TextEditingController();
   TextEditingController maxtemperature = TextEditingController();
   TextEditingController datetime = TextEditingController();
@@ -71,8 +72,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     TextButton.icon(
                       onPressed: () async {
                         // provide options to choose from gallery or camera
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
+                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
                         image?.readAsBytes().then((value) {
                           data = value;
                           setState(() {});
@@ -87,10 +87,20 @@ class _DetailsPageState extends State<DetailsPage> {
                   style: const TextStyle(fontSize: 15),
                   controller: mintemperature,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  maxLength: 2,
+                  maxLength: 3,
+                  onChanged: (val) {
+                    int minTemp = int.tryParse(val) ?? -100;
+
+                    if (minTemp == -100 || minTemp < -40) {
+                      minErrorMessage = "Invalid Entry.";
+                    } else {
+                      minErrorMessage = null;
+                    }
+
+                    setState(() {});
+                  },
                   decoration: InputDecoration(
-                    errorText: errormessage,
+                    errorText: minErrorMessage,
                     labelText: 'Enter Minimum Temperature',
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -106,7 +116,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   maxLength: 2,
                   decoration: InputDecoration(
                     labelText: 'Enter Maximum Temperature',
-                    errorText: errormessage,
+                    errorText: maxErrorMessage,
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
                       borderSide: BorderSide(width: 2.0),
