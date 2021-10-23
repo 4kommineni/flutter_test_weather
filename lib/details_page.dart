@@ -188,12 +188,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     } else {
                       weathercond = "Cloudy";
                     }
-                    if (mintemperature.value == null) {
-                      mintemperature.text = "Please enter the value";
-                    }
-                    if (maxtemperature.value == null) {
-                      mintemperature.text = "Please enter the value";
-                    }
 
                     WeatherData inputData = WeatherData(
                         mintemp: int.parse(mintemperature.text.toString()),
