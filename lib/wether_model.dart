@@ -5,14 +5,14 @@ class AllWeatherData {
 }
 
 class WeatherData {
-  Uint8List profilepic;
+  Uint8List? profilepic;
   int mintemp;
   int maxtemp;
   String weathercondition;
   DateTime? date;
 
   WeatherData({
-    required this.profilepic,
+    this.profilepic,
     required this.maxtemp,
     required this.mintemp,
     required this.weathercondition,
