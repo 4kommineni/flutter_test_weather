@@ -138,7 +138,6 @@ class _ReportPageState extends State<ReportPage> {
                           Text(weatherdetails?.allData
                                   .elementAt(index)
                                   .date!
-                                  .toUtc()
                                   .toString() ??
                               ""),
                           const Padding(padding: EdgeInsets.only(top: 23)),
