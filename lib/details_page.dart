@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:flutter_test_weather/report_page.dart';
+import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -174,13 +174,18 @@ class _DetailsPageState extends State<DetailsPage> {
                     onTap: () async {
                       var date = await showDatePicker(
                         context: context,
-                        initialDate: DateTime(2021, 09, 30),
+                        //  initialDate: DateTime(2021, 09, 30),
+                        initialDate: DateTime.now(),
                         firstDate: DateTime(1950, 1),
                         lastDate: DateTime(2022, 1),
                         helpText: 'Select a date',
                       );
-                      datetime.text = date?.toUtc().toString() ?? "";
 
+                      final f = DateFormat('dd/MM/yyyy');
+                      //datetime.text = f.format(
+                      //  DateTime.fromMillisecondsSinceEpoch(
+                      //     date?.millisecondsSinceEpoch ?? 0));
+                      datetime.text = f.format(date ?? DateTime.now());
                       date = date;
                       setState(() {});
                     },
@@ -196,10 +201,13 @@ class _DetailsPageState extends State<DetailsPage> {
                         weathercond = "Cloudy";
                       }
 
+                      DateTime newdate =
+                          DateFormat("dd/mm/yyyy").format(date!) as DateTime;
+
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: date,
+                          date: newdate,
                           weathercondition: weathercond,
                           profilepic: data!);
 
