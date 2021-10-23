@@ -83,8 +83,13 @@ class _DetailsPageState extends State<DetailsPage> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
+                    /* validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter minimum temperture';
+                      }
+                      return null;
+                    },*/
                     decoration: InputDecoration(
-                      errorText: errormessage,
                       labelText: 'Enter Minimum Temperature',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -98,9 +103,14 @@ class _DetailsPageState extends State<DetailsPage> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     maxLength: 2,
+                    /*validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter minimum temperture';
+                      }
+                      return null;
+                    },*/
                     decoration: InputDecoration(
                       labelText: 'Enter Maximum Temperature',
-                      errorText: errormessage,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(width: 2.0),
@@ -185,19 +195,11 @@ class _DetailsPageState extends State<DetailsPage> {
                       } else {
                         weathercond = "Cloudy";
                       }
-                      if (mintemperature.value == null) {
-                        mintemperature.text = "Please enter the value";
-                      }
-                      if (maxtemperature.value == null) {
-                        mintemperature.text = "Please enter the value";
-                      }
-                      DateTime newdate =
-                          DateFormat("dd/mm/yyyy").format(date!) as DateTime;
 
                       WeatherData inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: newdate,
+                          date: date,
                           weathercondition: weathercond,
                           profilepic: data!);
 
