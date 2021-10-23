@@ -71,7 +71,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         });
                       },
                       icon: const Icon(Icons.edit),
-                      label: const Text("change"),
+                      label: const Text("choose image"),
                     ),
                   ],
                 ),
