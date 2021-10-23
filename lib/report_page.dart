@@ -124,7 +124,8 @@ class _ReportPageState extends State<ReportPage> {
               margin: const EdgeInsets.all(20),
               clipBehavior: Clip.antiAlias,
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Image.memory(
                       weatherdetails!.allData.elementAt(index).profilepic,
@@ -146,7 +147,7 @@ class _ReportPageState extends State<ReportPage> {
                               children: <Widget>[
                                 RichText(
                                   text: TextSpan(
-                                      text: 'Maximum Temperature :',
+                                      text: 'Max temp :',
                                       style: const TextStyle(
                                           fontSize: 18,
                                           fontStyle: FontStyle.italic,
@@ -167,7 +168,7 @@ class _ReportPageState extends State<ReportPage> {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                      text: 'Minimum Temperature :',
+                                      text: 'Min Temp :',
                                       style: const TextStyle(
                                           fontSize: 18,
                                           fontStyle: FontStyle.italic,
@@ -189,7 +190,8 @@ class _ReportPageState extends State<ReportPage> {
                               ]),
                           const Padding(padding: EdgeInsets.only(top: 23)),
                           Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(weatherdetails?.allData
                                         .elementAt(index)
