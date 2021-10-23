@@ -194,8 +194,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     if (maxtemperature.value == null) {
                       mintemperature.text = "Please enter the value";
                     }
-                    DateTime newdate =
-                        DateFormat("dd/mm/yyyy").format(date!) as DateTime;
 
                     WeatherData inputData = WeatherData(
                         mintemp: int.parse(mintemperature.text.toString()),
