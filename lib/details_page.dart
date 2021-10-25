@@ -44,35 +44,36 @@ class _DetailsPageState extends State<DetailsPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Card(
-          elevation: 100.0,
-          color: Colors.indigoAccent[50],
-          margin: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
+          color: Colors.greenAccent[100],
+          elevation: 500,
+          margin: const EdgeInsets.symmetric(horizontal: 200),
+          child: Container(
+            alignment: Alignment.centerLeft,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    (data != null)
-                        ? Image.memory(
-                            data!,
-                            width: 200,
-                            height: 200,
-                          )
-                        : Image.asset(
-                            "images/profile_pic.png",
-                            width: 200,
-                            height: 200,
-                          ),
+                    Material(
+                      borderRadius: BorderRadius.circular(5),
+                      child: (data != null)
+                          ? Image.memory(
+                              data!,
+                              width: 200,
+                              height: 200,
+                            )
+                          : Image.asset(
+                              "images/profile_pic.png",
+                              width: 200,
+                              height: 200,
+                            ),
+                    ),
                     TextButton.icon(
                       onPressed: () async {
                         // provide options to choose from gallery or camera
-                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                        final XFile? image = await _picker.pickImage(
+                            source: ImageSource.gallery);
                         image?.readAsBytes().then((value) {
                           data = value;
                           setState(() {});
@@ -112,7 +113,6 @@ class _DetailsPageState extends State<DetailsPage> {
                   style: const TextStyle(fontSize: 15),
                   controller: maxtemperature,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   maxLength: 2,
                   decoration: InputDecoration(
                     labelText: 'Enter Maximum Temperature',
@@ -128,7 +128,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     "CHOOSE WEATHER TYPE",
                     style: TextStyle(fontSize: 15),
                   ),
-                  Row(
+                  Column(
                     children: [
                       Radio(
                         value: 0,
