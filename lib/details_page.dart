@@ -56,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Material(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(50),
                       child: (data != null)
                           ? Image.memory(
                               data!,
@@ -84,44 +84,59 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ],
                 ),
-                TextFormField(
-                  style: const TextStyle(fontSize: 15),
-                  controller: mintemperature,
-                  keyboardType: TextInputType.number,
-                  maxLength: 3,
-                  onChanged: (val) {
-                    int minTemp = int.tryParse(val) ?? -100;
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Flexible(
+                        child: TextFormField(
+                      style: const TextStyle(fontSize: 15),
+                      controller: mintemperature,
+                      keyboardType: TextInputType.number,
+                      maxLength: 3,
+                      onChanged: (val) {
+                        int minTemp = int.tryParse(val) ?? -100;
 
-                    if (minTemp == -100 || minTemp < -40) {
-                      minErrorMessage = "Invalid Entry.";
-                    } else {
-                      minErrorMessage = null;
-                    }
+                        if (minTemp == -100 || minTemp < -40) {
+                          minErrorMessage = "Invalid Entry.";
+                        } else {
+                          minErrorMessage = null;
+                        }
 
-                    setState(() {});
-                  },
-                  decoration: InputDecoration(
-                    errorText: minErrorMessage,
-                    labelText: 'Enter Minimum Temperature',
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(width: 2.0),
+                        setState(() {});
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(10),
+                        errorText: minErrorMessage,
+                        labelText: 'Enter Minimum Temperature',
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(width: 2.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 10.0,
                     ),
-                  ),
-                ),
-                TextFormField(
-                  style: const TextStyle(fontSize: 15),
-                  controller: maxtemperature,
-                  keyboardType: TextInputType.number,
-                  maxLength: 2,
-                  decoration: InputDecoration(
-                    labelText: 'Enter Maximum Temperature',
-                    errorText: maxErrorMessage,
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      borderSide: BorderSide(width: 2.0),
+                    Flexible(
+                        child: TextFormField(
+                      style: const TextStyle(fontSize: 15),
+                      controller: maxtemperature,
+                      keyboardType: TextInputType.number,
+                      maxLength: 2,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(10),
+                        labelText: 'Enter Maximum Temperature',
+                        errorText: maxErrorMessage,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(width: 2.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 10.0,
                     ),
-                  ),
+                  ],
                 ),
                 Column(children: [
                   const Text(
