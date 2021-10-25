@@ -44,7 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Card(
-          color: Colors.greenAccent[100],
+          color: Colors.blueGrey[100],
           elevation: 500,
           margin: const EdgeInsets.symmetric(horizontal: 200),
           child: Container(
@@ -56,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Material(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(75),
                       child: (data != null)
                           ? Image.memory(
                               data!,
@@ -150,52 +150,56 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ],
                 ),
-                Column(children: [
-                  const Text(
-                    "CHOOSE WEATHER TYPE",
-                    style: TextStyle(fontSize: 15),
-                  ),
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Column(
-                    children: [
-                      Radio(
-                        value: 0,
-                        groupValue: weathercondition,
-                        onChanged: (value) {
-                          weathercondition = 0;
-                          setState(() {});
-                        },
-                      ),
-                      const Text(
-                        'SUNNY',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      const VerticalDivider(thickness: 1),
-                      Radio(
-                        value: 1,
-                        groupValue: weathercondition,
-                        onChanged: (value) {
-                          weathercondition = 1;
-                          setState(() {});
-                        },
-                      ),
-                      const Text(
-                        'RAINY',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      Radio(
-                        value: 2,
-                        groupValue: weathercondition,
-                        onChanged: (value) {
-                          weathercondition = 2;
-                          setState(() {});
-                        },
-                      ),
-                      const Text(
-                        'CLOUDY',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "CHOOSE WEATHER TYPE",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Column(
+                          children: [
+                            Radio(
+                              value: 0,
+                              groupValue: weathercondition,
+                              onChanged: (value) {
+                                weathercondition = 0;
+                                setState(() {});
+                              },
+                            ),
+                            const Text(
+                              'SUNNY',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            const VerticalDivider(thickness: 1),
+                            Radio(
+                              value: 1,
+                              groupValue: weathercondition,
+                              onChanged: (value) {
+                                weathercondition = 1;
+                                setState(() {});
+                              },
+                            ),
+                            const Text(
+                              'RAINY',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: weathercondition,
+                              onChanged: (value) {
+                                weathercondition = 2;
+                                setState(() {});
+                              },
+                            ),
+                            const Text(
+                              'CLOUDY',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ]),
                 ]),
                 TextField(
                   readOnly: true,
