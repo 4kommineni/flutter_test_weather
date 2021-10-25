@@ -97,7 +97,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         int minTemp = int.tryParse(val) ?? -100;
 
                         if (minTemp == -100 || minTemp < -40) {
-                          minErrorMessage = "Invalid Entry.";
+                          minErrorMessage =
+                              "Mintemperature is greater than -40.";
                         } else {
                           minErrorMessage = null;
                         }
@@ -122,7 +123,18 @@ class _DetailsPageState extends State<DetailsPage> {
                       style: const TextStyle(fontSize: 15),
                       controller: maxtemperature,
                       keyboardType: TextInputType.number,
-                      maxLength: 2,
+                      maxLength: 3,
+                      onChanged: (val) {
+                        int maxTemp = int.tryParse(val) ?? -100;
+
+                        if (maxTemp == -100 || maxTemp < 50 || maxTemp > 0) {
+                          minErrorMessage = "Maxtemperature is less than 50.";
+                        } else {
+                          maxErrorMessage = null;
+                        }
+
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(10),
                         labelText: 'Enter Maximum Temperature',
@@ -208,6 +220,16 @@ class _DetailsPageState extends State<DetailsPage> {
                     //      date?.millisecondsSinceEpoch ?? 0));
                     datetime.text = f.format(date ?? DateTime.now());
                     date = date;
+
+                    if (date == null) {
+                      date = DateTime.now();
+                    } else if (date == DateTime.now()) {
+                      date = date;
+                    } else if (date.isAfter(DateTime.now()) == true) {
+                      date = date;
+                    } else {
+                      datetime.text = "Don't select past day";
+                    }
                     setState(() {});
                   },
                 ),
@@ -221,14 +243,20 @@ class _DetailsPageState extends State<DetailsPage> {
                     } else {
                       weathercond = "Cloudy";
                     }
-
-                    WeatherData inputData = WeatherData(
-                        mintemp: int.parse(mintemperature.text.toString()),
-                        maxtemp: int.parse(maxtemperature.text.toString()),
-                        date: date,
-                        weathercondition: weathercond,
-                        profilepic: data!);
-
+                    int mint = int.parse(mintemperature.text.toString());
+                    int maxt = int.parse(maxtemperature.text.toString());
+                    WeatherData? inputData;
+                    if (maxt > mint) {
+                      inputData = WeatherData(
+                          mintemp: int.parse(mintemperature.text.toString()),
+                          maxtemp: int.parse(maxtemperature.text.toString()),
+                          date: date,
+                          weathercondition: weathercond,
+                          profilepic: data!);
+                    } else {
+                      minErrorMessage =
+                          "Mintemperature is lessthan max temperature";
+                    }
                     Navigator.pop(context, inputData);
                   },
                   child: const Text(
