@@ -49,14 +49,15 @@ class _DetailsPageState extends State<DetailsPage> {
           margin: const EdgeInsets.symmetric(horizontal: 200),
           child: Container(
             alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Material(
-                      borderRadius: BorderRadius.circular(75),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
                       child: (data != null)
                           ? Image.memory(
                               data!,
@@ -67,6 +68,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               "images/profile_pic.png",
                               width: 200,
                               height: 200,
+                              fit: BoxFit.fill,
                             ),
                     ),
                     TextButton.icon(
@@ -219,9 +221,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     );
 
                     final f = DateFormat('dd/MM/yyyy');
-                    // datetime.text = f.format(
-                    //    DateTime.fromMillisecondsSinceEpoch(
-                    //      date?.millisecondsSinceEpoch ?? 0));
+
                     datetime.text = f.format(date ?? DateTime.now());
                     date = date;
 
@@ -257,11 +257,11 @@ class _DetailsPageState extends State<DetailsPage> {
                           date: date,
                           weathercondition: weathercond,
                           profilepic: data!);
+                      Navigator.pop(context, inputData);
                     } else {
                       minErrorMessage =
                           "Mintemperature is lessthan max temperature";
                     }
-                    Navigator.pop(context, inputData);
                   },
                   child: const Text(
                     "ADD",
