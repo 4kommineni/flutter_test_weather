@@ -44,7 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Card(
-          color: Colors.greenAccent[50],
+          color: Colors.greenAccent[100],
           elevation: 500,
           margin: const EdgeInsets.symmetric(horizontal: 200),
           child: Container(
@@ -56,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Material(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                       child: (data != null)
                           ? Image.memory(
                               data!,
@@ -113,18 +113,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   style: const TextStyle(fontSize: 15),
                   controller: maxtemperature,
                   keyboardType: TextInputType.number,
-                  maxLength: 3,
-                  onChanged: (val) {
-                    int maxTemp = int.tryParse(val) ?? -100;
-
-                    if (maxTemp == -40 || maxTemp < 50) {
-                      minErrorMessage = "Invalid Entry.";
-                    } else {
-                      maxErrorMessage = null;
-                    }
-
-                    setState(() {});
-                  },
+                  maxLength: 2,
                   decoration: InputDecoration(
                     labelText: 'Enter Maximum Temperature',
                     errorText: maxErrorMessage,
