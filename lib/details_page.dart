@@ -18,7 +18,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? data;
-  DateTime? date = DateTime.now();
+  DateTime? curDate = DateTime.now();
   String? minErrorMessage;
   String? maxErrorMessage;
   TextEditingController mintemperature = TextEditingController();
@@ -28,7 +28,6 @@ class _DetailsPageState extends State<DetailsPage> {
   int weathercondition = 0;
   @override
   void initState() {
-    //print(" rollNumber= ${widget.student?.rollNumber.toString()}");
     mintemperature.text = widget.weatherData?.mintemp.toString() ?? "";
 
     super.initState();
@@ -72,8 +71,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     TextButton.icon(
                       onPressed: () async {
                         // provide options to choose from gallery or camera
-                        final XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
+                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
                         image?.readAsBytes().then((value) {
                           data = value;
                           setState(() {});
@@ -97,8 +95,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         int minTemp = int.tryParse(val) ?? -100;
 
                         if (minTemp == -100 || minTemp < -40) {
-                          minErrorMessage =
-                              "Mintemperature is greater than -40.";
+                          minErrorMessage = "Mintemperature is greater than -40.";
                         } else {
                           minErrorMessage = null;
                         }
@@ -151,55 +148,53 @@ class _DetailsPageState extends State<DetailsPage> {
                   ],
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    const Text(
+                      "CHOOSE WEATHER TYPE",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Column(
                       children: [
+                        Radio(
+                          value: 0,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 0;
+                            setState(() {});
+                          },
+                        ),
                         const Text(
-                          "CHOOSE WEATHER TYPE",
-                          style: TextStyle(fontSize: 15),
+                          'SUNNY',
+                          style: TextStyle(fontSize: 10),
                         ),
-                        Column(
-                          children: [
-                            Radio(
-                              value: 0,
-                              groupValue: weathercondition,
-                              onChanged: (value) {
-                                weathercondition = 0;
-                                setState(() {});
-                              },
-                            ),
-                            const Text(
-                              'SUNNY',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                            const VerticalDivider(thickness: 1),
-                            Radio(
-                              value: 1,
-                              groupValue: weathercondition,
-                              onChanged: (value) {
-                                weathercondition = 1;
-                                setState(() {});
-                              },
-                            ),
-                            const Text(
-                              'RAINY',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                            Radio(
-                              value: 2,
-                              groupValue: weathercondition,
-                              onChanged: (value) {
-                                weathercondition = 2;
-                                setState(() {});
-                              },
-                            ),
-                            const Text(
-                              'CLOUDY',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                          ],
+                        const VerticalDivider(thickness: 1),
+                        Radio(
+                          value: 1,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 1;
+                            setState(() {});
+                          },
                         ),
-                      ]),
+                        const Text(
+                          'RAINY',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Radio(
+                          value: 2,
+                          groupValue: weathercondition,
+                          onChanged: (value) {
+                            weathercondition = 2;
+                            setState(() {});
+                          },
+                        ),
+                        const Text(
+                          'CLOUDY',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ]),
                 ]),
                 TextField(
                   readOnly: true,
@@ -209,7 +204,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     icon: Icon(Icons.calendar_today),
                   ),
                   onTap: () async {
-                    var date = await showDatePicker(
+                    var lclDate = await showDatePicker(
                       context: context,
                       //  initialDate: DateTime(2021, 09, 30),
                       initialDate: DateTime.now(),
@@ -219,21 +214,16 @@ class _DetailsPageState extends State<DetailsPage> {
                     );
 
                     final f = DateFormat('dd/MM/yyyy');
-                    // datetime.text = f.format(
-                    //    DateTime.fromMillisecondsSinceEpoch(
-                    //      date?.millisecondsSinceEpoch ?? 0));
-                    datetime.text = f.format(date ?? DateTime.now());
-                    date = date;
+                    curDate = lclDate;
 
-                    if (date == null) {
-                      date = DateTime.now();
-                    } else if (date == DateTime.now()) {
-                      date = date;
-                    } else if (date.isAfter(DateTime.now()) == true) {
-                      date = date;
+                    if (lclDate?.isAfter(DateTime.now()) == true &&
+                        (lclDate?.difference(DateTime.now()).inDays ?? -10) < 7 &&
+                        (lclDate?.difference(DateTime.now()).inDays ?? -10) > 0) {
+                      datetime.text = f.format(lclDate ?? DateTime.now());
                     } else {
                       datetime.text = "Don't select past day";
                     }
+
                     setState(() {});
                   },
                 ),
@@ -254,12 +244,11 @@ class _DetailsPageState extends State<DetailsPage> {
                       inputData = WeatherData(
                           mintemp: int.parse(mintemperature.text.toString()),
                           maxtemp: int.parse(maxtemperature.text.toString()),
-                          date: date,
+                          date: curDate,
                           weathercondition: weathercond,
                           profilepic: data!);
                     } else {
-                      minErrorMessage =
-                          "Mintemperature is lessthan max temperature";
+                      minErrorMessage = "Mintemperature is lessthan max temperature";
                     }
                     Navigator.pop(context, inputData);
                   },
