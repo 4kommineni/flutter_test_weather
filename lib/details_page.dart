@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? data;
-  DateTime? date = DateTime.now();
+  DateTime? locdate = DateTime.now();
   String? minErrorMessage;
   String? maxErrorMessage;
   TextEditingController mintemperature = TextEditingController();
@@ -28,9 +29,23 @@ class _DetailsPageState extends State<DetailsPage> {
   int weathercondition = 0;
   @override
   void initState() {
+    String weathercond = "";
+    if (weathercondition == 0) {
+      weathercond = "Sunny";
+    } else if (weathercondition == 1) {
+      weathercond = "Rainy";
+    } else {
+      weathercond = "Cloudy";
+    }
+    final f = DateFormat('dd/MM/yyyy');
+
     //print(" rollNumber= ${widget.student?.rollNumber.toString()}");
     mintemperature.text = widget.weatherData?.mintemp.toString() ?? "";
+    maxtemperature.text = widget.weatherData?.maxtemp.toString() ?? "";
+    weathercond = widget.weatherData?.weathercondition ?? "no";
 
+    datetime.text = f.format(widget.weatherData?.date ?? DateTime.now());
+    data = widget.weatherData?.profilepic;
     super.initState();
   }
 
@@ -44,7 +59,7 @@ class _DetailsPageState extends State<DetailsPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Card(
-          color: Colors.blueGrey[100],
+          color: Colors.greenAccent[100],
           elevation: 500,
           margin: const EdgeInsets.symmetric(horizontal: 200),
           child: Padding(
@@ -258,7 +273,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         inputData = WeatherData(
                             mintemp: int.parse(mintemperature.text.toString()),
                             maxtemp: int.parse(maxtemperature.text.toString()),
-                            date: date,
+                            date: locdate,
                             weathercondition: weathercond,
                             profilepic: data!);
                         Navigator.pop(context, inputData);

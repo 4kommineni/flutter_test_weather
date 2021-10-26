@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test_weather/details_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
+import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -112,83 +114,70 @@ class _ReportPageState extends State<ReportPage> {
       );
 
   Widget _buildweather() {
+    final f = DateFormat('dd/MM/yyyy');
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox.fromSize(
             size: const Size.fromWidth(600),
             child: ListView.builder(
+                scrollDirection: Axis.vertical,
                 controller: _scrollController,
                 itemCount: weatherdetails?.allData.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Slidable(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-                      child: Card(
-                          elevation: 8,
-                          color: Colors.blueGrey,
-                          // margin: const EdgeInsets.all(20),
-                          clipBehavior: Clip.antiAlias,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              (weatherdetails!.allData
+                  return Card(
+                      elevation: 8,
+                      color: Colors.blue[100],
+                      margin: const EdgeInsets.all(20),
+                      clipBehavior: Clip.antiAlias,
+                      child: Slidable(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            (weatherdetails!.allData
+                                        .elementAt(index)
+                                        .profilepic ==
+                                    null)
+                                ? Image.asset("images/profile_pic.png")
+                                : Image.memory(
+                                    weatherdetails!.allData
+                                        .elementAt(index)
+                                        .profilepic!,
+                                    fit: BoxFit.cover,
+                                    width: 200,
+                                    height: 200,
+                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16.0, right: 16, bottom: 18),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  if (weatherdetails?.allData
                                           .elementAt(index)
-                                          .profilepic ==
+                                          .date !=
                                       null)
-                                  ? Image.asset("images/profile_pic.png")
-                                  : Image.memory(
-                                      weatherdetails!.allData
-                                          .elementAt(index)
-                                          .profilepic!,
-                                      fit: BoxFit.cover,
-                                      width: 200,
-                                      height: 200,
-                                    ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(weatherdetails?.allData
+                                    Text(f.format(weatherdetails?.allData
                                             .elementAt(index)
-                                            .date
-                                            ?.toString() ??
-                                        ""),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        RichText(
-                                          text: TextSpan(
-                                              text: 'Max temp :',
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontStyle: FontStyle.italic,
-                                                  fontWeight: FontWeight.bold),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: (weatherdetails?.allData
-                                                          .elementAt(index)
-                                                          .maxtemp
-                                                          .toString() ??
-                                                      ""),
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              ]),
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'Min Temp :',
+                                            .date ??
+                                        DateTime.now())),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 16, bottom: 16)),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      RichText(
+                                        text: TextSpan(
+                                            text: 'Max temp :',
                                             style: const TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontStyle: FontStyle.italic,
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
@@ -204,91 +193,82 @@ class _ReportPageState extends State<ReportPage> {
                                                     fontWeight:
                                                         FontWeight.bold),
                                               )
-                                            ],
-                                          ),
+                                            ]),
+                                      ),
+                                      const SizedBox(
+                                        width: 100,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Min Temp :',
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.bold),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: (weatherdetails?.allData
+                                                      .elementAt(index)
+                                                      .mintemp
+                                                      .toString() ??
+                                                  ""),
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(weatherdetails?.allData
-                                                .elementAt(index)
-                                                .weathercondition ??
-                                            ""),
-                                        //  Row(
-                                        //    children: [
-                                        //     ElevatedButton(
-                                        //        onPressed: () async {
-                                        //          WeatherData modifiedData =
-                                        //               await Navigator.push(
-                                        //            context,
-                                        //              MaterialPageRoute(
-                                        //                builder: (context) =>
-                                        //                     DetailsPage(
-                                        //                   weatherData:
-                                        //                        weatherdetails!
-                                        //                            .allData
-                                        //                            .elementAt(index),
-                                        //                  ),
-                                        //                ),
-                                        //              );
-                                        //              weatherdetails!.allData[index] =
-                                        //                  modifiedData;
-                                        //              setState(() {});
-                                        //           },
-                                        //            child: const Icon(Icons.edit),
-                                        //          ),
-                                        //         ElevatedButton(
-                                        //            onPressed: () {
-                                        //              weatherdetails?.allData
-                                        //                 .removeAt(index);
-                                        //             setState(() {});
-                                        //           },
-                                        //           child: const Icon(Icons.delete),
-                                        //          ),
-                                      ],
-                                    ),
-                                    // ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-                    ),
-                    actionPane: SlidableDrawerActionPane(),
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                          caption: 'edit',
-                          color: Colors.black45,
-                          icon: Icons.edit,
-                          onTap: () async {
-                            WeatherData modifiedData = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailsPage(
-                                  weatherData:
-                                      weatherdetails!.allData.elementAt(index),
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Padding(padding: EdgeInsets.all(18)),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(weatherdetails?.allData
+                                              .elementAt(index)
+                                              .weathercondition ??
+                                          ""),
+                                    ],
+                                  ),
+                                  // ]),
+                                ],
                               ),
-                            );
-                            weatherdetails!.allData[index] = modifiedData;
-                            setState(() {});
-                          }),
-                      IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () {
-                          weatherdetails?.allData.removeAt(index);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  );
+                            )
+                          ],
+                        ),
+                        actionPane: SlidableDrawerActionPane(),
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                              caption: 'edit',
+                              color: Colors.black45,
+                              icon: Icons.edit,
+                              onTap: () async {
+                                WeatherData modifiedData = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailsPage(
+                                      weatherData: weatherdetails!.allData
+                                          .elementAt(index),
+                                    ),
+                                  ),
+                                );
+                                weatherdetails!.allData[index] = modifiedData;
+                                setState(() {});
+                              }),
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () {
+                              weatherdetails?.allData.removeAt(index);
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ));
                 })),
       ],
     );
