@@ -156,11 +156,12 @@ class _DetailsPageState extends State<DetailsPage> {
                               keyboardType: TextInputType.number,
                               maxLength: 3,
                               onChanged: (val) {
+                                print(val);
                                 int maxTemp = int.tryParse(val) ?? -100;
-
-                                if (maxTemp == -100 ||
-                                    maxTemp < 0 ||
-                                    maxTemp > 50) {
+                                print(maxTemp);
+                                if (maxTemp == -100) {
+                                  maxErrorMessage = null;
+                                } else if (maxTemp < 0 || maxTemp > 50) {
                                   maxErrorMessage =
                                       "Maxtemperature is greater than 50.";
                                 } else {
