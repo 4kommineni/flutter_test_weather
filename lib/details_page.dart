@@ -52,21 +52,21 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Insert Weather Report'),
-          backgroundColor: Colors.purple,
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox.fromSize(
-              size: const Size.fromWidth(600),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Card(
-                  elevation: 8,
-                  margin: const EdgeInsets.all(40),
-                  color: Colors.indigo[100],
+      appBar: AppBar(
+        title: const Text('Insert Weather Report'),
+        backgroundColor: Colors.purple,
+      ),
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 2,
+                color: Colors.indigo[100],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -188,61 +188,62 @@ class _DetailsPageState extends State<DetailsPage> {
                         ],
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(children: [
+                                const Text(
+                                  "CHOOSE WEATHER TYPE ",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                Row(
                                   children: [
+                                    Radio(
+                                      value: 0,
+                                      groupValue: weathercondition,
+                                      onChanged: (value) {
+                                        weathercondition = 0;
+                                        setState(() {});
+                                      },
+                                    ),
                                     const Text(
-                                      "CHOOSE WEATHER TYPE",
-                                      style: TextStyle(fontSize: 15),
+                                      'SUNNY',
+                                      style: TextStyle(fontSize: 10),
                                     ),
-                                    Column(
-                                      children: [
-                                        Radio(
-                                          value: 0,
-                                          groupValue: weathercondition,
-                                          onChanged: (value) {
-                                            weathercondition = 0;
-                                            setState(() {});
-                                          },
-                                        ),
-                                        const Text(
-                                          'SUNNY',
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                        const VerticalDivider(thickness: 1),
-                                        Radio(
-                                          value: 1,
-                                          groupValue: weathercondition,
-                                          onChanged: (value) {
-                                            weathercondition = 1;
-                                            setState(() {});
-                                          },
-                                        ),
-                                        const Text(
-                                          'RAINY',
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                        Radio(
-                                          value: 2,
-                                          groupValue: weathercondition,
-                                          onChanged: (value) {
-                                            weathercondition = 2;
-                                            setState(() {});
-                                          },
-                                        ),
-                                        const Text(
-                                          'CLOUDY',
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                      ],
+                                    const VerticalDivider(thickness: 1),
+                                    Radio(
+                                      value: 1,
+                                      groupValue: weathercondition,
+                                      onChanged: (value) {
+                                        weathercondition = 1;
+                                        setState(() {});
+                                      },
                                     ),
-                                  ]),
+                                    const Text(
+                                      'RAINY',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    Radio(
+                                      value: 2,
+                                      groupValue: weathercondition,
+                                      onChanged: (value) {
+                                        weathercondition = 2;
+                                        setState(() {});
+                                      },
+                                    ),
+                                    const Text(
+                                      'CLOUDY',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                              ]),
                             ),
                           ]),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextField(
@@ -318,8 +319,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ),
               ),
-            ),
-          ],
-        ));
+            );
+          },
+        ),
+      ),
+    );
   }
 }
