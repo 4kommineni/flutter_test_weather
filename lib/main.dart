@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test_weather/report_page.dart';
 
@@ -11,52 +13,53 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_constructors
     return MaterialApp(
-      title: 'Weather App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: SplashSceeenPage(),
+      routes: {
+        "ReportPage": (context) => ReportPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class SplashSceeenPage extends StatefulWidget {
+  const SplashSceeenPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<SplashSceeenPage> createState() => _SplashSceeenPage();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SplashSceeenPage extends State<SplashSceeenPage> {
+  void startTimer() {
+    Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacementNamed('ReportPage');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            const Text(
-              'WEATHER APP',
-              style: TextStyle(fontSize: 30.0, color: Colors.pink),
+        backgroundColor: Colors.blue,
+        body: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage('assests/images/weatherbgimage.jpg'),
+            fit: BoxFit.cover,
+          )),
+          child: Center(
+            child: Image.asset(
+              'assests/images/weatherlogo.jpg',
+              width: MediaQuery.of(context).size.width - 5,
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ReportPage()),
-                );
-              },
-              child: const Text(
-                'START',
-                style: TextStyle(fontSize: 20.0, color: Colors.green),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ));
+          ),
+        ));
   }
 }
