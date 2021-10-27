@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_weather/report_page.dart';
@@ -14,15 +15,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashSceeenPage(),
       routes: {
         "ReportPage": (context) => ReportPage(),
       },
+
+      scrollBehavior: MyCustomScrollBehavior(),
+      // ...
     );
   }
 }
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        // etc.
+      };
+}
+
+// Set ScrollBehavior for an entire application.
 
 class SplashSceeenPage extends StatefulWidget {
   const SplashSceeenPage({Key? key}) : super(key: key);
