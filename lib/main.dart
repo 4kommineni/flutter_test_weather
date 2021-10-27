@@ -56,7 +56,7 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
           )),
           child: Center(
             child: Image.asset(
-              'assests/images/profile_pic.png',
+              'assests/images/weatherlogo.jpg',
               width: MediaQuery.of(context).size.width - 5,
             ),
           ),
