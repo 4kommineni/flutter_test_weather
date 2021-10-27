@@ -27,4 +27,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/profile_pic.png
+    - assets/images/weatherbgimage.jpg
+    - assets/images/weatherlogo.jpg
   
