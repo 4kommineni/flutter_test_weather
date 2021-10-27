@@ -51,12 +51,12 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
         body: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('assests/images/weatherbgimage.jpg'),
+            image: AssetImage('assets/images/weatherbgimage.jpg'),
             fit: BoxFit.cover,
           )),
           child: Center(
             child: Image.asset(
-              'assests/images/weatherlogo.jpg',
+              'assets/images/weatherlogo.jpg',
               width: MediaQuery.of(context).size.width - 5,
             ),
           ),
