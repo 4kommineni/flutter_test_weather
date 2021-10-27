@@ -57,7 +57,7 @@ class _DetailsPageState extends State<DetailsPage> {
           return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                width: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.indigo[100],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
