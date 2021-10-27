@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:flutter_test_weather/report_page.dart';
 import 'package:flutter_test_weather/wether_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
