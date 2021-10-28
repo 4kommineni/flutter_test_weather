@@ -17,12 +17,12 @@ class _ReportPageState extends State<ReportPage> {
   AllWeatherData? weatherdetails;
   final ScrollController _scrollController = ScrollController();
   bool isFab = false;
+
   @override
   void initState() {
     weatherdetails = AllWeatherData();
 
-    weatherdetails?.allData
-        .add(WeatherData(maxtemp: 12, mintemp: 2, weathercondition: "Sunny"));
+    weatherdetails?.allData.add(WeatherData(maxtemp: 12, mintemp: 2, weathercondition: "Sunny"));
 
     _scrollController.addListener(() {
       if (_scrollController.offset > 20) {
@@ -49,39 +49,47 @@ class _ReportPageState extends State<ReportPage> {
             },
             child: const Icon(Icons.backspace)),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.teal,
-            //floating: true,
-            pinned: true,
-            stretch: true,
-            //snap: true,
-            onStretchTrigger: () async {
-              Text("hi");
-            },
-            expandedHeight: 200,
-            flexibleSpace: FlexibleSpaceBar(
-                stretchModes: const [
-                  StretchMode.zoomBackground,
-                  StretchMode.blurBackground,
-                  StretchMode.fadeTitle
-                ],
-                title: Text("weather app"),
-                background: DecoratedBox(
-                  position: DecorationPosition.foreground,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.center,
-                          colors: <Color>[Colors.teal, Colors.transparent])),
-                  child: Image.asset(
-                    "images/wea.png",
-                    fit: BoxFit.cover,
-                  ),
-                )),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 600,
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.teal,
+                  //floating: true,
+                  pinned: true,
+                  stretch: true,
+                  //snap: true,
+                  onStretchTrigger: () async {
+                    Text("hi");
+                  },
+                  expandedHeight: 200,
+                  flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: const [
+                        StretchMode.zoomBackground,
+                        StretchMode.blurBackground,
+                        StretchMode.fadeTitle
+                      ],
+                      title: Text("weather app"),
+                      background: DecoratedBox(
+                        position: DecorationPosition.foreground,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.center,
+                                colors: <Color>[Colors.teal, Colors.transparent])),
+                        child: Image.asset(
+                          "images/wea.png",
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                ),
+                buildweather(),
+              ],
+            ),
           ),
-          buildweather(),
         ],
       ),
       floatingActionButton: isFab ? buildFAB() : buildextendedFAB(),
@@ -156,32 +164,45 @@ class _ReportPageState extends State<ReportPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  (weatherdetails!.allData.elementAt(index).profilepic == null)
-                      ? Image.asset("images/profile_pic.png")
-                      : Image.memory(
-                          weatherdetails!.allData.elementAt(index).profilepic!,
-                          fit: BoxFit.cover,
-                          width: 200,
-                          height: 148,
+                  Stack(
+                    children: [
+                      Container(
+                        child: (weatherdetails!.allData.elementAt(index).profilepic == null)
+                            ? Image.asset(
+                                "images/profile_pic.png",
+                                fit: BoxFit.fill,
+                                width: 200,
+                                height: 148,
+                              )
+                            : Image.memory(
+                                weatherdetails!.allData.elementAt(index).profilepic!,
+                                fit: BoxFit.fill,
+                                width: 200,
+                                height: 148,
+                              ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          left: 150,
+                          top: 100,
                         ),
+                        child: Icon(Icons.edit),
+                      ),
+                    ],
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16, bottom: 14),
+                    padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 14),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if (weatherdetails?.allData.elementAt(index).date !=
-                            null)
+                        if (weatherdetails?.allData.elementAt(index).date != null)
                           Text(
-                            f.format(
-                                weatherdetails?.allData.elementAt(index).date ??
-                                    DateTime.now()),
+                            f.format(weatherdetails?.allData.elementAt(index).date ?? DateTime.now()),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
 
-                        const Padding(
-                            padding: EdgeInsets.only(top: 16, bottom: 16)),
+                        const Padding(padding: EdgeInsets.only(top: 16, bottom: 16)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -189,20 +210,12 @@ class _ReportPageState extends State<ReportPage> {
                               text: TextSpan(
                                   text: 'Max temp :',
                                   style: const TextStyle(
-                                      fontSize: 15,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.bold),
+                                      fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: (weatherdetails?.allData
-                                              .elementAt(index)
-                                              .mintemp
-                                              .toString() ??
-                                          ""),
+                                      text: (weatherdetails?.allData.elementAt(index).mintemp.toString() ?? ""),
                                       style: const TextStyle(
-                                          fontSize: 15,
-                                          fontStyle: FontStyle.italic,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                     )
                                   ]),
                             ),
@@ -213,37 +226,24 @@ class _ReportPageState extends State<ReportPage> {
                               text: TextSpan(
                                 text: 'Min Temp :',
                                 style: const TextStyle(
-                                    fontSize: 14,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: (weatherdetails?.allData
-                                            .elementAt(index)
-                                            .mintemp
-                                            .toString() ??
-                                        ""),
+                                    text: (weatherdetails?.allData.elementAt(index).mintemp.toString() ?? ""),
                                     style: const TextStyle(
-                                        fontSize: 14,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.bold),
+                                        fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(top: 8, right: 12, left: 12)),
+                        const Padding(padding: EdgeInsets.only(top: 8, right: 12, left: 12)),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(weatherdetails?.allData
-                                    .elementAt(index)
-                                    .weathercondition ??
-                                ""),
+                            Text(weatherdetails?.allData.elementAt(index).weathercondition ?? ""),
                           ],
                         ),
                         // ]),
@@ -263,8 +263,7 @@ class _ReportPageState extends State<ReportPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetailsPage(
-                            weatherData:
-                                weatherdetails!.allData.elementAt(index),
+                            weatherData: weatherdetails!.allData.elementAt(index),
                           ),
                         ),
                       );
