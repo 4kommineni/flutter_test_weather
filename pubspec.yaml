@@ -15,10 +15,12 @@ dependencies:
   image_picker: ^0.8.4+2
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
+  flutter_slidable:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
 
   flutter_lints: ^1.0.0
 
