@@ -60,12 +60,12 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Widget _buildNormalContainer() {
-    return Container(
-        color: Colors.lime[100],
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+          color: Colors.lime[100],
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
@@ -85,8 +85,7 @@ class _DetailsPageState extends State<DetailsPage> {
               TextButton.icon(
                 onPressed: () async {
                   // provide options to choose from gallery or camera
-                  final XFile? image =
-                      await _picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
                   image?.readAsBytes().then((value) {
                     data = value;
                     setState(() {});
@@ -95,8 +94,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 icon: const Icon(Icons.edit),
                 label: const Text("choose image"),
               ),
-              Flexible(
-                  child: Padding(
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   style: const TextStyle(fontSize: 15),
@@ -124,12 +122,11 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ),
-              )),
+              ),
               const SizedBox(
                 width: 10.0,
               ),
-              Flexible(
-                  child: Padding(
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   style: const TextStyle(fontSize: 15),
@@ -159,7 +156,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ),
-              )),
+              ),
               const SizedBox(
                 width: 10.0,
               ),
@@ -266,8 +263,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         profilepic: data!);
                     Navigator.pop(context, inputData);
                   } else {
-                    minErrorMessage =
-                        "Mintemperature is lessthan max temperature";
+                    minErrorMessage = "Mintemperature is lessthan max temperature";
                   }
                 },
                 child: const Text(
@@ -276,8 +272,8 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
             ],
-          ),
-        ));
+          )),
+    );
   }
 
   Widget _buildWideContainers() {
@@ -319,8 +315,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         child: TextButton.icon(
                           onPressed: () async {
                             // provide options to choose from gallery or camera
-                            final XFile? image = await _picker.pickImage(
-                                source: ImageSource.gallery);
+                            final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
                             image?.readAsBytes().then((value) {
                               data = value;
                               setState(() {});
@@ -347,8 +342,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             int minTemp = int.tryParse(val) ?? -100;
 
                             if (minTemp == -100 || minTemp < -40) {
-                              minErrorMessage =
-                                  "Mintemperature is greater than -40.";
+                              minErrorMessage = "Mintemperature is greater than -40.";
                             } else {
                               minErrorMessage = null;
                             }
@@ -360,8 +354,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             errorText: minErrorMessage,
                             labelText: 'Enter Minimum Temperature',
                             border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(width: 2.0),
                             ),
                           ),
@@ -384,8 +377,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             if (maxTemp == -100) {
                               maxErrorMessage = null;
                             } else if (maxTemp < 0 || maxTemp > 50) {
-                              maxErrorMessage =
-                                  "Maxtemperature is greater than 50.";
+                              maxErrorMessage = "Maxtemperature is greater than 50.";
                             } else {
                               maxErrorMessage = null;
                             }
@@ -397,8 +389,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             labelText: 'Enter Maximum Temperature',
                             errorText: maxErrorMessage,
                             border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(width: 2.0),
                             ),
                           ),
@@ -526,8 +517,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             profilepic: data!);
                         Navigator.pop(context, inputData);
                       } else {
-                        minErrorMessage =
-                            "Mintemperature is lessthan max temperature";
+                        minErrorMessage = "Mintemperature is lessthan max temperature";
                       }
                     },
                     child: const Text(
