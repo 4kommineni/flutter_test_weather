@@ -85,7 +85,8 @@ class _DetailsPageState extends State<DetailsPage> {
               TextButton.icon(
                 onPressed: () async {
                   // provide options to choose from gallery or camera
-                  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.gallery);
                   image?.readAsBytes().then((value) {
                     data = value;
                     setState(() {});
@@ -263,7 +264,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         profilepic: data!);
                     Navigator.pop(context, inputData);
                   } else {
-                    minErrorMessage = "Mintemperature is lessthan max temperature";
+                    minErrorMessage =
+                        "Mintemperature is lessthan max temperature";
                   }
                 },
                 child: const Text(
@@ -315,7 +317,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         child: TextButton.icon(
                           onPressed: () async {
                             // provide options to choose from gallery or camera
-                            final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                            final XFile? image = await _picker.pickImage(
+                                source: ImageSource.gallery);
                             image?.readAsBytes().then((value) {
                               data = value;
                               setState(() {});
@@ -342,7 +345,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             int minTemp = int.tryParse(val) ?? -100;
 
                             if (minTemp == -100 || minTemp < -40) {
-                              minErrorMessage = "Mintemperature is greater than -40.";
+                              minErrorMessage =
+                                  "Mintemperature is greater than -40.";
                             } else {
                               minErrorMessage = null;
                             }
@@ -354,7 +358,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             errorText: minErrorMessage,
                             labelText: 'Enter Minimum Temperature',
                             border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(width: 2.0),
                             ),
                           ),
@@ -377,7 +382,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             if (maxTemp == -100) {
                               maxErrorMessage = null;
                             } else if (maxTemp < 0 || maxTemp > 50) {
-                              maxErrorMessage = "Maxtemperature is greater than 50.";
+                              maxErrorMessage =
+                                  "Maxtemperature is greater than 50.";
                             } else {
                               maxErrorMessage = null;
                             }
@@ -389,7 +395,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             labelText: 'Enter Maximum Temperature',
                             errorText: maxErrorMessage,
                             border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(width: 2.0),
                             ),
                           ),
@@ -517,7 +524,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             profilepic: data!);
                         Navigator.pop(context, inputData);
                       } else {
-                        minErrorMessage = "Mintemperature is lessthan max temperature";
+                        minErrorMessage =
+                            "Mintemperature is lessthan max temperature";
                       }
                     },
                     child: const Text(
