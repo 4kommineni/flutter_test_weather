@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
+
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test_weather/report_page.dart';
@@ -58,7 +61,8 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
   @override
   void initState() {
     super.initState();
-    startTimer();
+    getWethewrDetails();
+    //startTimer();
   }
 
   @override
@@ -78,5 +82,13 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
             ),
           ),
         ));
+  }
+
+  void getWethewrDetails() async {
+    var url = Uri.parse('https://devapi.srivijnanavihara.com/general/dummy/GET_WEATHER_DATA');
+    var response = await http.post(url, body: jsonEncode({'count': '7'}));
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    Navigator.of(context).pushReplacementNamed('ReportPage');
   }
 }
