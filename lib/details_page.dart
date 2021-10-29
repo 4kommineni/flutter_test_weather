@@ -30,9 +30,6 @@ class _DetailsPageState extends State<DetailsPage> {
   int weathercondition = 0;
   @override
   void initState() {
-    if (weathercondition == 0) {
-    } else if (weathercondition == 1) {
-    } else {}
     final f = DateFormat('dd/MM/yyyy');
 
     mintemperature.text = widget.weatherData?.mintemp.toString() ?? "";
