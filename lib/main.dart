@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter_test_weather/model/http_resp.dart';
+import 'package:flutter_test_weather/wether_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -21,11 +24,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashSceeenPage(),
-      routes: {
-        "ReportPage": (context) => ReportPage(),
-      },
-
+      home: const SplashSceeenPage(),
       scrollBehavior: MyCustomScrollBehavior(),
       // ...
     );
@@ -52,21 +51,14 @@ class SplashSceeenPage extends StatefulWidget {
 }
 
 class _SplashSceeenPage extends State<SplashSceeenPage> {
-  void startTimer() {
-    Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacementNamed('ReportPage');
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    getWethewrDetails();
-    //startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
+    getWethewrDetails();
     return Scaffold(
         backgroundColor: Colors.blue,
         body: Container(
@@ -86,9 +78,20 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
 
   void getWethewrDetails() async {
     var url = Uri.parse('https://devapi.srivijnanavihara.com/general/dummy/GET_WEATHER_DATA');
+
     var response = await http.post(url, body: jsonEncode({'count': '7'}));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-    Navigator.of(context).pushReplacementNamed('ReportPage');
+    print('Response code: ${response.statusCode}');
+
+    HttpResponse resp = HttpResponse.fromJson(jsonDecode(response.body));
+
+    print('Response code: ${resp.code}');
+    print('Response msg: ${resp.msg}');
+
+    WeatherData data = WeatherData.fromJson(resp.msg);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ReportPage(priData: data)),
+    );
   }
 }

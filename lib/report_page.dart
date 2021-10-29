@@ -7,7 +7,8 @@ import 'package:flutter_test_weather/wether_model.dart';
 import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
-  const ReportPage({Key? key}) : super(key: key);
+  final WeatherData priData;
+  const ReportPage({Key? key, required this.priData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ReportPageState();
@@ -22,7 +23,7 @@ class _ReportPageState extends State<ReportPage> {
   void initState() {
     weatherdetails = AllWeatherData();
 
-    weatherdetails?.allData.add(WeatherData(maxtemp: 12, mintemp: 2, weathercondition: "Sunny"));
+    weatherdetails?.allData.add(widget.priData);
 
     _scrollController.addListener(() {
       if (_scrollController.offset > 20) {
@@ -229,7 +230,7 @@ class _ReportPageState extends State<ReportPage> {
                                     fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: (weatherdetails?.allData.elementAt(index).mintemp.toString() ?? ""),
+                                    text: (weatherdetails?.allData.elementAt(index).maxtemp.toString() ?? ""),
                                     style: const TextStyle(
                                         fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
                                   )

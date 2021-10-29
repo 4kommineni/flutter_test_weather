@@ -18,4 +18,12 @@ class WeatherData {
     required this.weathercondition,
     this.date,
   });
+
+  factory WeatherData.fromJson(Map<String, dynamic> data) {
+    return WeatherData(
+        mintemp: int.parse(data['minTemp'].toString().split(".")[0]),
+        maxtemp: int.parse(data['maxTemp'].toString().split(".")[0]),
+        date: DateTime.parse(data['dayDate']),
+        weathercondition: data['dayType']);
+  }
 }
