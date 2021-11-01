@@ -1,14 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
-
-import 'package:flutter_test_weather/model/http_resp.dart';
-import 'package:flutter_test_weather/wether_model.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test_weather/report_page.dart';
+import 'package:flutter_test_weather/weather_report/report_page_ui.dart';
+import 'package:flutter_test_weather/weather_report/reprt_service.dart';
+import 'package:flutter_test_weather/weather_report/wether_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,21 +71,10 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
   }
 
   void getWethewrDetails() async {
-    var url = Uri.parse('https://devapi.srivijnanavihara.com/general/dummy/GET_WEATHER_DATA');
-
-    var response = await http.post(url, body: jsonEncode({'count': '7'}));
-    print('Response code: ${response.statusCode}');
-
-    HttpResponse resp = HttpResponse.fromJson(jsonDecode(response.body));
-
-    print('Response code: ${resp.code}');
-    print('Response msg: ${resp.msg}');
-
-    WeatherData data = WeatherData.fromJson(resp.msg);
-
+    List<WeatherData> myData = await ReportService().getWethewrDetails();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ReportPage(priData: data)),
+      MaterialPageRoute(builder: (context) => ReportPage(priData: myData)),
     );
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test_weather/details_page.dart';
-import 'package:flutter_test_weather/wether_model.dart';
+import 'package:flutter_test_weather/weather_report/wether_model.dart';
 import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
-  final WeatherData priData;
+  final List<WeatherData> priData;
   const ReportPage({Key? key, required this.priData}) : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class _ReportPageState extends State<ReportPage> {
   void initState() {
     weatherdetails = AllWeatherData();
 
-    weatherdetails?.allData.add(widget.priData);
+    weatherdetails?.allData.addAll(widget.priData);
 
     _scrollController.addListener(() {
       if (_scrollController.offset > 20) {
