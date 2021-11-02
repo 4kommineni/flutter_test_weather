@@ -2,6 +2,17 @@ import 'dart:typed_data';
 
 class AllWeatherData {
   List<WeatherData> allData = List.empty(growable: true);
+
+  Iterable<WeatherData> fromJson(List<dynamic> data) {
+    return data.map((element) {
+      return WeatherData.fromJson(element);
+    });
+
+    // for (int i = 0; i < data.length; i++) {
+    //   WeatherData temp = WeatherData.fromJson(data[i]);
+    //   allData.add(temp);
+    // }
+  }
 }
 
 class WeatherData {
@@ -20,8 +31,10 @@ class WeatherData {
   });
 
   factory WeatherData.fromJson(Map<String, dynamic> data) {
+    int mtemp = int.parse(data['minTemp'].toString().split(".")[0]);
+
     return WeatherData(
-        mintemp: int.parse(data['minTemp'].toString().split(".")[0]),
+        mintemp: mtemp,
         maxtemp: int.parse(data['maxTemp'].toString().split(".")[0]),
         date: DateTime.parse(data['dayDate']),
         weathercondition: data['dayType']);
