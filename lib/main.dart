@@ -77,7 +77,8 @@ class _SplashSceeenPage extends State<SplashSceeenPage> {
   }
 
   void getWethewrDetails() async {
-    var url = Uri.parse('https://devapi.srivijnanavihara.com/general/dummy/GET_WEATHER_DATA');
+    var url = Uri.parse(
+        'https://devapi.srivijnanavihara.com/general/dummy/GET_WEATHER_DATA');
 
     var response = await http.post(url, body: jsonEncode({'count': '7'}));
     print('Response code: ${response.statusCode}');
